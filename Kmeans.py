@@ -9,7 +9,7 @@ which is the mean μk ∈ Rd of the cluster’s members.
 
 import math
 
-def k_means(K, input_data, iter = 200,):
+def k_means(K, input_data, iter = 200):
 
     # Define the stopping criteria
     epsilon = 0.001
@@ -42,6 +42,8 @@ def k_means(K, input_data, iter = 200,):
     curr_iter = 0
     # Check if all delta of centroids have changed at least to a size bigger than epsilon
     while curr_iter < iter and not all_centroids_less_than_epsilon(delta_centroids, epsilon):
+        points_per_cluster = [[] for i in range(K)]
+
         for i in range(len(data_points)):
             index_closest_centroid = find_closest_cluster(data_points[i], centroids)
             points_per_cluster[index_closest_centroid].append(data_points[i])
@@ -59,6 +61,7 @@ def k_means(K, input_data, iter = 200,):
         tuple(f"{x:.4f}" for x in centroid) for centroid in centroids
     ]
     print(centroids)
+    print("this is curr_iter: " + str(curr_iter))
     return centroids
 
 
@@ -104,8 +107,8 @@ def avg_of_data_points(list_of_tuples):
     return tuple([sum_of_coordinate / len(list_of_tuples) for sum_of_coordinate in sum_of_coordinates])
         
 
-k_means(3, 'input_data.txt')
+k_means(7, 'input_2.txt')
 
-
+    
 
     

@@ -20,7 +20,6 @@ def k_means(K, input_data, iter = 200,):
         data = file.read()
 
     # Use the split method to split the content by whitespace (default)
-    # data_points = raw_data.split()
 
     # Step 1: Split the data into individual lines
     lines = data.strip().split('\n')
@@ -48,12 +47,7 @@ def k_means(K, input_data, iter = 200,):
             points_per_cluster[index_closest_centroid].append(data_points[i])
         
         for i in range(len(points_per_cluster)):
-            # updated_centroid = sum(points_per_cluster[i]) / len(points_per_cluster[i])
             updated_centroid = avg_of_data_points(points_per_cluster[i])
-            # print(updated_centroid)
-            # delta_centroids[i] = updated_centroid - centroids[i]
-
-            # delta_centroids[i] = tuple(updated_centroid[k] - centroids[i][k] for k in range(len(centroids[i])))
             delta_centroids[i] = euclidean_distance(updated_centroid, centroids[i])
 
             centroids[i] = updated_centroid

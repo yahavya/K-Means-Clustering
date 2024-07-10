@@ -90,15 +90,37 @@ int find_closest_centroid(struct cord *curr_cord, double **centroids, int num_cl
 
 int main(int argc, char **argv)
 {
-    // if (argc != 3)
-    // {
-    //     fprintf(stderr, "Usage: %s <num_clusters> <num_iterations>\n", argv[0]);
-    //     return 1;
-    // }
+    int num_iterations = 200;
+    if (argc < 2 || argc > 3)
+    {
+        printf("An Error Has Occurred\n");
+        return 1;
+    }
+
+    if (argc == 3)
+    {
+        num_iterations = atoi(argv[2]);
+    }
+
     double epsilon = 0.001;
+
+    if (atoi(argv[1]) == 0)
+    {
+        printf("Invalid number of clusters!");
+        return 1;
+    }
+    if (atoi(argv[2]) == 0)
+    {
+        printf("Invalid maximum iterations!");
+        return 1;
+    }
     int num_clusters = atoi(argv[1]);
-    int num_iterations = atoi(argv[2]);
     int vector_length = 0;
+
+    if (num_iterations <= 1 || num_clusters >= 1000)
+    {
+        printf("Invalid maximum iterations!");
+    }
 
     struct vector *head_vec, *curr_vec, *next_vec;
     struct cord *head_cord, *curr_cord, *next_cord;
@@ -114,6 +136,8 @@ int main(int argc, char **argv)
     curr_vec->next = NULL;
     int in_first_vector = 1;
 
+    int total_vectors = 0;
+
     while (scanf("%lf%c", &n, &c) == 2)
     {
         if (in_first_vector == 1)
@@ -122,6 +146,8 @@ int main(int argc, char **argv)
         }
         if (c == '\n')
         {
+            total_vectors++;
+
             in_first_vector = 0;
             curr_cord->value = n;
             curr_vec->cords = head_cord;
@@ -142,7 +168,11 @@ int main(int argc, char **argv)
         }
     }
 
-    // printf("THIS IS VECTOR LENGTH:%d\n", vector_length);
+    if (num_clusters >= total_vectors || num_clusters <= 1)
+    {
+        printf("Invalid number of clusters!");
+        return 1;
+    }
 
     // create a 2d array of vectors of length vector_length * num_clusters
 
@@ -275,7 +305,7 @@ int main(int argc, char **argv)
             printf("%.4f,", centroids[i][j]);
         }
         printf("%.4f\n", centroids[i][vector_length - 1]);
-        }
+    }
     printf("\n");
 
     // free memory

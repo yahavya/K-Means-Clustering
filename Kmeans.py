@@ -60,13 +60,11 @@ def k_means(K, input_data, iter = 200):
 
         curr_iter += 1
 
-    # Formatting the elements of each tuple in the list to four decimal places
-    centroids = [tuple(f"{x:.4f}" for x in centroid) for centroid in centroids]
+    # Print the centroids
+    for centroid in centroids:
+        print(','.join(f"{float(coord):.4f}" for coord in centroid))
 
-    print(centroids)
-    print("this is curr_iter: " + str(curr_iter))
     return centroids
-
 
 def have_centroids_changed(delta_centroids, epsilon):
     for delta_centroid in delta_centroids:

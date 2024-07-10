@@ -201,16 +201,6 @@ int main(int argc, char **argv)
         vector_index++;
     }
 
-    // iterate over the array
-    // for (int i = 0; i < num_clusters; i++)
-    // {
-    //     for (int j = 0; j < vector_length; j++)
-    //     {
-    //         printf("%f ", centroids[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
     // create a 2d array of length of num_clusters
 
     double **sum_clusters = malloc(num_clusters * sizeof(double *));

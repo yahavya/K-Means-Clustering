@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     int num_iterations = 200;
     if (argc < 2 || argc > 3)
     {
-        printf("An Error Has Occurred\n");
+        printf("An Error Has Occurred");
         return 1;
     }
 

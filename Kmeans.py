@@ -8,6 +8,7 @@ which is the mean μk ∈ Rd of the cluster’s members.
 """
 
 import math
+import sys
 
 def k_means(K, input_data, iter = 200):
 
@@ -33,6 +34,11 @@ def k_means(K, input_data, iter = 200):
         
         # Step 4: Convert to a tuple and add to the list of data points
         data_points.append(tuple(parts))
+
+    num_data_points = len(data_points)
+    if K >= num_data_points or K <= 1:
+        print("Invalid number of clusters!")
+        sys.exit(1)
 
     centroids = [data_points[i] for i in range(K)]
     delta_centroids = [float("inf") for i in range(K)]
@@ -107,9 +113,42 @@ def avg_of_data_points(list_of_tuples):
 
     return tuple([sum_of_coordinate / len(list_of_tuples) for sum_of_coordinate in sum_of_coordinates])
         
+def main():
 
-k_means(7, 'input_2.txt')
+    if len(sys.argv) < 3 or len(sys.argv) > 4:
+        print("An Error Has Occurred")
+        sys.exit(1)
 
+    try:
+        int(sys.argv[1])
+    except ValueError:
+        print("Invalid number of clusters!")
+        sys.exit(1)
+
+    k = int(sys.argv[1])
+    iterations = 200
+
+    if len(sys.argv) == 4:
+        try:
+            int(sys.argv[2])
+        except ValueError:
+            print("Invalid maximum iterations!")
+            sys.exit(1)
+
+        iterations = int(sys.argv[2])
+        input_file = sys.argv[3]
+    
+    else:
+        input_file = sys.argv[2]
+
+    if iterations <= 1 or iterations >= 1000:
+        print("Invalid maximum iterations!")
+        sys.exit(1)
+
+    k_means(k, input_file, iterations)
+
+if __name__ == "__main__":
+    main()
     
 
     

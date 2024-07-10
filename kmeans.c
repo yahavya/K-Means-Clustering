@@ -48,7 +48,7 @@ int have_centroids_changed(double *delta_centroids, double epsilon, int num_clus
 
 double euclidean_distance(double *cord1, double *cord2, int vector_length)
 {
-    int sum = 0;
+    double sum = 0;
     for (int i = 0; i < vector_length; i++)
     {
         // calculate euclidean distance between two vectors
@@ -213,20 +213,20 @@ int main(int argc, char **argv)
         counters_reset(counters, num_clusters);
 
         // print sum_clusters and counters after reset
-        for (int i = 0; i < num_clusters; i++)
-        {
-            printf("Sum cluster %d: ", i);
-            for (int j = 0; j < vector_length; j++)
-            {
-                printf("%f ", sum_clusters[i][j]);
-            }
-            printf("\n");
-        }
-        printf("Counters: ");
-        for (int i = 0; i < num_clusters; i++)
-        {
-            printf("%d ", counters[i]);
-        }
+        // for (int i = 0; i < num_clusters; i++)
+        // {
+        //     printf("Sum cluster %d: ", i);
+        //     for (int j = 0; j < vector_length; j++)
+        //     {
+        //         printf("%f ", sum_clusters[i][j]);
+        //     }
+        //     printf("\n");
+        // }
+        // printf("Counters: ");
+        // for (int i = 0; i < num_clusters; i++)
+        // {
+        //     printf("%d ", counters[i]);
+        // }
 
         // printf("Iteration %d:\n", curr_iter);
 
@@ -245,6 +245,7 @@ int main(int argc, char **argv)
             counters[closest_centroid]++;
             curr_vec = curr_vec->next;
         }
+
         // recalculate centroids
         for (int i = 0; i < num_clusters; i++)
         {
@@ -269,12 +270,12 @@ int main(int argc, char **argv)
     }
     for (int i = 0; i < num_clusters; i++)
     {
-        for (int j = 0; j < vector_length; j++)
+        for (int j = 0; j < vector_length - 1; j++)
         {
-            printf("%.4f ", centroids[i][j]);
+            printf("%.4f,", centroids[i][j]);
         }
-        printf("\n");
-    }
+        printf("%.4f\n", centroids[i][vector_length - 1]);
+        }
     printf("\n");
 
     // free memory

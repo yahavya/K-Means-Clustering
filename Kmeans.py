@@ -41,13 +41,17 @@ def k_means(K, input_data, iter = 200):
     
     curr_iter = 0
     # Check if all delta of centroids have changed at least to a size bigger than epsilon
-    while curr_iter < iter and not all_centroids_less_than_epsilon(delta_centroids, epsilon):
+    while curr_iter < iter and not have_centroids_changed(delta_centroids, epsilon):
+
+        # Reset the points per cluster, as we will calculate the uk's again
         points_per_cluster = [[] for i in range(K)]
 
+        # Assign each data point to the closest cluster
         for i in range(len(data_points)):
             index_closest_centroid = find_closest_cluster(data_points[i], centroids)
             points_per_cluster[index_closest_centroid].append(data_points[i])
         
+        # Calculate the new centroids
         for i in range(len(points_per_cluster)):
             updated_centroid = avg_of_data_points(points_per_cluster[i])
             delta_centroids[i] = euclidean_distance(updated_centroid, centroids[i])
@@ -57,15 +61,14 @@ def k_means(K, input_data, iter = 200):
         curr_iter += 1
 
     # Formatting the elements of each tuple in the list to four decimal places
-    centroids = [
-        tuple(f"{x:.4f}" for x in centroid) for centroid in centroids
-    ]
+    centroids = [tuple(f"{x:.4f}" for x in centroid) for centroid in centroids]
+
     print(centroids)
     print("this is curr_iter: " + str(curr_iter))
     return centroids
 
 
-def all_centroids_less_than_epsilon(delta_centroids, epsilon):
+def have_centroids_changed(delta_centroids, epsilon):
     for delta_centroid in delta_centroids:
         if delta_centroid >= epsilon:
             return False
